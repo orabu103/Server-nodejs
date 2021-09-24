@@ -27,9 +27,11 @@ app.use(express.json())
 
 app.use(cors())
 
-app.get('/getTable', (req , res) => {
-    let sql = 'SELECT * FROM shift';
-    db.query(sql , (err , result) => {
+app.post('/getTable', (req , res) => {
+    const id = req.body.id;
+    console.log(id + "---------------");
+    let sql = 'SELECT * FROM shift WHERE ID = ?';
+    db.query(sql , Number(id),(err , result) => {
         if(err) throw err;
         res.send(result);   
         console.log(result);
@@ -54,6 +56,14 @@ app.post('/shift', (req, res) => {
             res.json("shift addedd");
      });
   });
+  
+  app.post('/lastShift', (req , res) => {
+    console.log("ok");
+    lastShiftStatus(req.body.id,(result) => {
+            res.json(result);
+     });
+    
+}) 
 
 app.listen(port ,hostname , () => {
     console.log('Server started on port 3000')
