@@ -23,11 +23,13 @@ db.connect((err) => {
 });
 
 const app = express();
-app.use(express.json())
 
+app.use(express.json())
 app.use(cors())
 
-app.post('/getTable', (req , res) => {
+
+//A function get as an input an ID card and returns the shifts
+app.post('/getAllShifts', (req , res) => {
     const id = req.body.id;
     console.log(id + "---------------");
     let sql = 'SELECT * FROM shift WHERE ID = ?';
